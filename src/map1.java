@@ -38,10 +38,10 @@ public class map1 extends JFrame implements Runnable{
     private JLabel textwinlose;
     private JButton backtomenu;
     private JButton restart2= new JButton("restart"); ;
-    private ArrayList<Character> giraffes = new ArrayList<>(); // ArrayList for storing Giraffe instances
-    private ArrayList<Character> enemies = new ArrayList<>();  // ArrayList สำหรับเก็บ enemy
+    private ArrayList<Character> giraffes = new ArrayList<>(); 
+    private ArrayList<Character> enemies = new ArrayList<>();  
      private clickbutton bt = new clickbutton();
-     private JLayeredPane layeredpane = new JLayeredPane();  // Create JLayeredPane for layering components
+     private JLayeredPane layeredpane = new JLayeredPane();  
      private draw drawPanel; 
      public boolean checkspawncharacter =true;
     private Random random = new Random();
@@ -55,7 +55,7 @@ public class map1 extends JFrame implements Runnable{
     private  Thread enemySpawnThread;
 
 private void restartGame() {
-    // Clear the lists of giraffes and enemies
+
     for (Character giraffe : giraffes) {
         giraffe.stopattack();
         layeredpane.remove(giraffe.getCharacterLabel());
@@ -69,14 +69,14 @@ private void restartGame() {
     }
     enemies.clear(); 
 
-    // Reset fortress health and game state
+   
     fortressgirafe.sethprestartgiraffe();
     fortressEnemy.sethprestartenemi();
     win = false;
     lose = false;
     winlose.setVisible(false);
     
-    // Repaint the draw panel to reflect changes
+
     drawPanel.repaint();
 }
 

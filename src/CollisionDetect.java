@@ -10,6 +10,4 @@ public class CollisionDetect {
         if (enemy == null || giraffe == null) return false;
         return enemy.getBounds().intersects(giraffe.getBounds());
     }
-
-
 }

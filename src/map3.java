@@ -38,10 +38,10 @@ public class map3 extends JFrame implements Runnable{
     private JLabel textwinlose;
     private JButton backtomenu;
     private JButton restart2= new JButton("restart"); ;
-    private ArrayList<Character> giraffes = new ArrayList<>(); // ArrayList for storing Giraffe instances
-    private ArrayList<Character> enemies = new ArrayList<>();  // ArrayList สำหรับเก็บ enemy
+    private ArrayList<Character> giraffes = new ArrayList<>(); 
+    private ArrayList<Character> enemies = new ArrayList<>();  
      private clickbutton bt = new clickbutton();
-     private JLayeredPane layeredpane = new JLayeredPane();  // Create JLayeredPane for layering components
+     private JLayeredPane layeredpane = new JLayeredPane();  
      private draw drawPanel; 
      public  boolean checkspawncharacter =true;
     private Random random = new Random();
@@ -55,7 +55,7 @@ public class map3 extends JFrame implements Runnable{
     private  Thread enemySpawnThread;
 
 private void restartGame() {
-    // Clear the lists of giraffes and enemies
+
     for (Character giraffe : giraffes) {
         giraffe.stopattack();
         layeredpane.remove(giraffe.getCharacterLabel());
@@ -270,13 +270,13 @@ private void checkCollisions() {
         }
     }
     
-    // ใช้ iterator แทนการ removeIf
+
     Iterator<Character> giraffeIterator = giraffes.iterator();
     while (giraffeIterator.hasNext()) {
         Character charac = giraffeIterator.next();
         if (charac.gethp() <= 0) {
             layeredpane.remove(charac.getCharacterLabel());
-            giraffeIterator.remove(); // ลบโดยใช้ iterator เพื่อหลีกเลี่ยงข้อผิดพลาด
+            giraffeIterator.remove(); 
         }
     }
     
@@ -285,13 +285,13 @@ private void checkCollisions() {
         Character charac = enemyIterator.next();
         if (charac.gethp() <= 0) {
             layeredpane.remove(charac.getCharacterLabel());
-            enemyIterator.remove(); // ลบโดยใช้ iterator
+            enemyIterator.remove();
         }
     }
     
     drawPanel.repaint();
 
-    // ตรวจสอบการชนระหว่างยีราฟและป้อมปราการ
+
     giraffeIterator = giraffes.iterator();
     while (giraffeIterator.hasNext()) {
         Character giraffe = giraffeIterator.next();
@@ -302,7 +302,7 @@ private void checkCollisions() {
         }
     }
     
-    // ตรวจสอบการชนระหว่างศัตรูและป้อมปราการ
+
     enemyIterator = enemies.iterator();
     while (enemyIterator.hasNext()) {
         Character enemy = enemyIterator.next();

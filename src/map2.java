@@ -55,7 +55,7 @@ public class map2 extends JFrame implements Runnable{
     private  Thread enemySpawnThread;
 
 private void restartGame() {
-    // Clear the lists of giraffes and enemies
+
     for (Character giraffe : giraffes) {
         giraffe.stopattack();
         layeredpane.remove(giraffe.getCharacterLabel());
@@ -69,14 +69,14 @@ private void restartGame() {
     }
     enemies.clear(); 
 
-    // Reset fortress health and game state
+ 
     fortressgirafe.sethprestartgiraffe();
     fortressEnemy.sethprestartenemi();
     win = false;
     lose = false;
     winlose.setVisible(false);
     
-    // Repaint the draw panel to reflect changes
+
     drawPanel.repaint();
 }
 
@@ -273,13 +273,12 @@ private void checkCollisions() {
         }
     }
     
-    // ใช้ iterator แทนการ removeIf
     Iterator<Character> giraffeIterator = giraffes.iterator();
     while (giraffeIterator.hasNext()) {
         Character charac = giraffeIterator.next();
         if (charac.gethp() <= 0) {
             layeredpane.remove(charac.getCharacterLabel());
-            giraffeIterator.remove(); // ลบโดยใช้ iterator เพื่อหลีกเลี่ยงข้อผิดพลาด
+            giraffeIterator.remove(); 
         }
     }
     
@@ -288,7 +287,7 @@ private void checkCollisions() {
         Character charac = enemyIterator.next();
         if (charac.gethp() <= 0) {
             layeredpane.remove(charac.getCharacterLabel());
-            enemyIterator.remove(); // ลบโดยใช้ iterator
+            enemyIterator.remove(); 
         }
     }
     
