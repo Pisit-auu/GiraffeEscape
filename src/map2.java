@@ -394,7 +394,7 @@ public void spawnRandomEnemy() {
             enemy = new spaceship(startX, startY, 18,80,10,400);
             break;
         case 4:
-            enemy = new titanrobo(startX, startY, 12,1000,100,1000);
+            enemy = new titanrobo(startX, startY, 12,1000,50,1000);
             break;
         default:
            enemy = new people(startX, startY,15,100,15,500);
