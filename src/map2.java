@@ -160,7 +160,7 @@ private void restartGame() {
         add(layeredpane);
          enemySpawnThread = new Thread(() -> {
             while (true) {
-                int randomspawn = 4500 + random.nextInt(1000);
+                int randomspawn = 7000 + random.nextInt(1000);
 
                 if(checkspawncharacter){
                  spawnRandomEnemy(); 
@@ -339,11 +339,11 @@ class clickbutton implements ActionListener {
             if (e.getSource() == bc1) {
          setButtonEnabled(false);
          cooldown = cooldownbc1;
-         giraffe = new DefaultGiraffe(1300, y, -5,100,15,500);
+         giraffe = new DefaultGiraffe(1300, y, -5,100,10,500);
      } else if (e.getSource() == bc2) {
          cooldown = cooldownbc2;
              setButtonEnabled(false);
-         giraffe = new TankGiraffe(1300, y, -3,300,20,800); 
+         giraffe = new TankGiraffe(1300, y, -3,300,12,800); 
      } else if (e.getSource() == bc3) {
          cooldown = cooldownbc3;
              setButtonEnabled(false);
@@ -351,7 +351,7 @@ class clickbutton implements ActionListener {
      } else if (e.getSource() == bc4) {
          cooldown = cooldownbc4;
                    setButtonEnabled(false);
-         giraffe = new BirdGiraffe(1300, y, -8,80,10,400); 
+         giraffe = new BirdGiraffe(1300, y, -8,50,20,400); 
      } else if (e.getSource() == bc5) {
          cooldown = cooldownbc5;
            setButtonEnabled(false);
@@ -393,7 +393,7 @@ public void spawnRandomEnemy() {
             enemy = new spaceship(startX, startY, 18,80,10,400);
             break;
         case 4:
-            enemy = new titanrobo(startX, startY, 12,1000,50,1000);
+            enemy = new titanrobo(startX, startY, 12,500,50,1000);
             break;
         default:
            enemy = new people(startX, startY,15,100,15,500);

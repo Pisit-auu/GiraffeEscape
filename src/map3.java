@@ -158,7 +158,7 @@ private void restartGame() {
         add(layeredpane);
          enemySpawnThread = new Thread(() -> {
             while (true) {
-                int randomspawn = 4500 + random.nextInt(1000);
+                int randomspawn = 8000 + random.nextInt(1000);
 
                 if(checkspawncharacter){
                  spawnRandomEnemy(); 
@@ -337,11 +337,11 @@ class clickbutton implements ActionListener {
           if (e.getSource() == bc1) {
          setButtonEnabled(false);
          cooldown = cooldownbc1;
-         giraffe = new DefaultGiraffe(1300, y, -5,100,15,500);
+         giraffe = new DefaultGiraffe(1300, y, -5,100,10,500);
      } else if (e.getSource() == bc2) {
          cooldown = cooldownbc2;
              setButtonEnabled(false);
-         giraffe = new TankGiraffe(1300, y, -3,300,20,800); 
+         giraffe = new TankGiraffe(1300, y, -3,300,12,800); 
      } else if (e.getSource() == bc3) {
          cooldown = cooldownbc3;
              setButtonEnabled(false);
@@ -349,11 +349,11 @@ class clickbutton implements ActionListener {
      } else if (e.getSource() == bc4) {
          cooldown = cooldownbc4;
                    setButtonEnabled(false);
-         giraffe = new BirdGiraffe(1300, y, -8,80,10,400); 
+         giraffe = new BirdGiraffe(1300, y, -8,100,15,400); 
      } else if (e.getSource() == bc5) {
          cooldown = cooldownbc5;
            setButtonEnabled(false);
-         giraffe = new LizardGiraffe(1300, y, -6,120,18,600);
+         giraffe = new LizardGiraffe(1300, y, -6,200,18,600);
      }
         
         if (giraffe != null) {
@@ -373,7 +373,7 @@ class clickbutton implements ActionListener {
     }
 }
 public void spawnRandomEnemy() {
-    int enemyType = 5; 
+    int enemyType = 3; 
     int startX = 150;                  
     int startY = 530+random.nextInt(30);  
       Character enemy = null;
@@ -385,13 +385,13 @@ public void spawnRandomEnemy() {
             enemy = new robottank(startX, startY, 13,300,20,800);
             break;
         case 3:
-            enemy = new lizardrobo(startX, startY, 16,120,18,600);
+            enemy = new lizardrobo(startX, startY, 15,1000,100,1200);
             break;
         case 2:
             enemy = new spaceship(startX, startY, 18,80,10,400);
             break;
         case 4:
-            enemy = new titanrobo(startX, startY, 12,400,30,1000);
+            enemy = new titanrobo(startX, startY, 12,1000,100,1200);
             break;
         default:
            enemy = new people(startX, startY,15,100,15,500);
