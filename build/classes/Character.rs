@@ -1,0 +1,11 @@
+LizardGiraffe
+spaceship
+TitanGiraffe
+Character
+BirdGiraffe
+TankGiraffe
+robottank
+lizardrobo
+titanrobo
+people
+DefaultGiraffe
