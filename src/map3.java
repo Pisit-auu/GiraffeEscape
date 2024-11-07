@@ -241,19 +241,28 @@ public void run() {
         }
     }
 }
-    private void updateGame(){
-                    for (Character character : giraffes) {
-                        character.startMoving();
-                    }
-                    for (Character character : enemies) {
-                        character.startMoving();
-                    }
-                     checkCollisions();
-                     popwinlose();
-                     
-                     checkspawncharacter =  checkresult();
-        repaint();
+private void updateGame() {
+    // ใช้ Iterator สำหรับ giraffes
+    Iterator<Character> giraffeIterator = giraffes.iterator();
+    while (giraffeIterator.hasNext()) {
+        Character character = giraffeIterator.next();
+        character.startMoving();
     }
+
+    // ใช้ Iterator สำหรับ enemies
+    Iterator<Character> enemyIterator = enemies.iterator();
+    while (enemyIterator.hasNext()) {
+        Character character = enemyIterator.next();
+        character.startMoving();
+    }
+
+    checkCollisions();
+    popwinlose();
+    checkspawncharacter = checkresult();
+
+    repaint();
+}
+
     private boolean checkresult(){
         if(fortressEnemy.gethp()<=0|| fortressgirafe.gethp()<=0){
             return false;
