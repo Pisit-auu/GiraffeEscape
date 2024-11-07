@@ -317,9 +317,6 @@ class clickbutton implements ActionListener {
     
            private int cooldownbc1 = 1000;
        private   int cooldownbc2 = 1200;
-       private   int cooldownbc3 = 2000;
-       private   int cooldownbc4 = 2500;
-      private    int cooldownbc5 = 3000;
         private  int cooldown ;
     @Override
     public void actionPerformed(ActionEvent e) {
