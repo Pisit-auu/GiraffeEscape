@@ -28,9 +28,6 @@ public class map1 extends JFrame implements Runnable{
 
     private JButton bc1 = createButton("/projectgame/icon/defaulticon.png");
     private JButton bc2 = createButton("/projectgame/icon/tankicon.png");
-    private JButton bc3 = createButton("/projectgame/icon/titanicon.png");
-    private JButton bc4 = createButton("/projectgame/icon/birdicon.png");
-    private JButton bc5 = createButton("/projectgame/icon/lizardicon.png");
     private JButton exit = new JButton("Exit");
     private JButton exit2 = new JButton("Back to Map");
     private JButton restart = new JButton("Try Agian");
@@ -89,16 +86,12 @@ private void restartGame() {
         pnchoose.setOpaque(false);
         bc1.addActionListener(bt);
         bc2.addActionListener(bt);
-        bc3.addActionListener(bt);
-        bc4.addActionListener(bt);
-        bc5.addActionListener(bt);
+
         
         
         pnchoose.add(bc1);
         pnchoose.add(bc2);
-        pnchoose.add(bc3);
-        pnchoose.add(bc4);
-        pnchoose.add(bc5);
+
         
         
         drawPanel = new draw("/bgmap1.png");
@@ -309,9 +302,6 @@ private void checkCollisions() {
 private void setButtonEnabled(boolean enabled) {
     bc1.setEnabled(enabled);
     bc2.setEnabled(enabled);
-    bc3.setEnabled(enabled);
-    bc4.setEnabled(enabled);
-    bc5.setEnabled(enabled);
 }
 
 class clickbutton implements ActionListener {
@@ -335,18 +325,6 @@ class clickbutton implements ActionListener {
             cooldown = cooldownbc2;
                 setButtonEnabled(false);
             giraffe = new TankGiraffe(1300, y, -3,300,20,800); 
-        } else if (e.getSource() == bc3) {
-            cooldown = cooldownbc3;
-                setButtonEnabled(false);
-            giraffe = new TitanGiraffe(1300, y, -2,400,50,1000);
-        } else if (e.getSource() == bc4) {
-            cooldown = cooldownbc4;
-                      setButtonEnabled(false);
-            giraffe = new BirdGiraffe(1300, y, -10,80,60,400); 
-        } else if (e.getSource() == bc5) {
-            cooldown = cooldownbc5;
-              setButtonEnabled(false);
-            giraffe = new LizardGiraffe(1300, y, -8,120,18,400);
         }
         
         if (giraffe != null) {
@@ -377,14 +355,8 @@ public void spawnRandomEnemy() {
         case 1:
             enemy = new robottank(startX, startY, 13,500,18,800);
             break;
-        case 3:
-            enemy = new lizardrobo(startX, startY, 16,120,18,600);
-            break;
         case 2:
             enemy = new spaceship(startX, startY, 20,100,20,400);
-            break;
-        case 4:
-            enemy = new titanrobo(startX, startY, 12,400,30,1000);
             break;
         default:
            enemy = new people(startX, startY,15,100,15,500);

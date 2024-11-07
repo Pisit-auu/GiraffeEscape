@@ -29,8 +29,6 @@ public class map2 extends JFrame implements Runnable{
     private JButton bc1 = createButton("/projectgame/icon/defaulticon.png");
     private JButton bc2 = createButton("/projectgame/icon/tankicon.png");
     private JButton bc3 = createButton("/projectgame/icon/titanicon.png");
-    private JButton bc4 = createButton("/projectgame/icon/birdicon.png");
-    private JButton bc5 = createButton("/projectgame/icon/lizardicon.png");
     private JButton exit = new JButton("Exit");
     private  JButton exit2 = new JButton("Back to Map");
     private JButton restart = new JButton("Try Agian");
@@ -90,15 +88,11 @@ private void restartGame() {
         bc1.addActionListener(bt);
         bc2.addActionListener(bt);
         bc3.addActionListener(bt);
-        bc4.addActionListener(bt);
-        bc5.addActionListener(bt);
         
         
         pnchoose.add(bc1);
         pnchoose.add(bc2);
         pnchoose.add(bc3);
-        pnchoose.add(bc4);
-        pnchoose.add(bc5);
         
         
         drawPanel = new draw("/bgmap2.png");
@@ -319,8 +313,6 @@ private void setButtonEnabled(boolean enabled) {
     bc1.setEnabled(enabled);
     bc2.setEnabled(enabled);
     bc3.setEnabled(enabled);
-    bc4.setEnabled(enabled);
-    bc5.setEnabled(enabled);
 }
 
 class clickbutton implements ActionListener {
@@ -328,8 +320,6 @@ class clickbutton implements ActionListener {
        private int cooldownbc1 = 1000;
        private   int cooldownbc2 = 1200;
        private   int cooldownbc3 = 2000;
-       private   int cooldownbc4 = 2500;
-      private    int cooldownbc5 = 3000;
         private int cooldown ;
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -343,20 +333,12 @@ class clickbutton implements ActionListener {
      } else if (e.getSource() == bc2) {
          cooldown = cooldownbc2;
              setButtonEnabled(false);
-         giraffe = new TankGiraffe(1300, y, -3,300,12,800); 
+         giraffe = new TankGiraffe(1300, y, -3,400,25,500); 
      } else if (e.getSource() == bc3) {
          cooldown = cooldownbc3;
              setButtonEnabled(false);
          giraffe = new TitanGiraffe(1300, y, -2,400,30,1000);
-     } else if (e.getSource() == bc4) {
-         cooldown = cooldownbc4;
-                   setButtonEnabled(false);
-         giraffe = new BirdGiraffe(1300, y, -8,50,20,400); 
-     } else if (e.getSource() == bc5) {
-         cooldown = cooldownbc5;
-           setButtonEnabled(false);
-         giraffe = new LizardGiraffe(1300, y, -6,120,18,600);
-     }
+     } 
         
         if (giraffe != null) {
             giraffe.startMoving();
@@ -393,7 +375,7 @@ public void spawnRandomEnemy() {
             enemy = new spaceship(startX, startY, 18,80,10,400);
             break;
         case 4:
-            enemy = new titanrobo(startX, startY, 12,500,50,1000);
+            enemy = new titanrobo(startX, startY, 12,700,100,1000);
             break;
         default:
            enemy = new people(startX, startY,15,100,15,500);

@@ -31,8 +31,6 @@ public class mainpage extends JFrame {
         });
        layeredpane.add(btstart, Integer.valueOf(1));
         add(layeredpane);
-       
-        
     }
     
    class drawmainpage extends JPanel{

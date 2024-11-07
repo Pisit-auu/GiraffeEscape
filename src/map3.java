@@ -158,7 +158,7 @@ private void restartGame() {
         add(layeredpane);
          enemySpawnThread = new Thread(() -> {
             while (true) {
-                int randomspawn = 8000 + random.nextInt(1000);
+                int randomspawn = 7000 + random.nextInt(500);
 
                 if(checkspawncharacter){
                  spawnRandomEnemy(); 
@@ -260,7 +260,7 @@ public void run() {
         }
         return true;
     }
-private void checkCollisions() {
+    private void checkCollisions() {
     for (Character playerChar : giraffes) {
         for (Character enemyChar : enemies) {
             if (playerChar.getBounds().intersects(enemyChar.getBounds())) {
@@ -270,7 +270,6 @@ private void checkCollisions() {
         }
     }
     
-
     Iterator<Character> giraffeIterator = giraffes.iterator();
     while (giraffeIterator.hasNext()) {
         Character charac = giraffeIterator.next();
@@ -285,13 +284,13 @@ private void checkCollisions() {
         Character charac = enemyIterator.next();
         if (charac.gethp() <= 0) {
             layeredpane.remove(charac.getCharacterLabel());
-            enemyIterator.remove();
+            enemyIterator.remove(); 
         }
     }
     
     drawPanel.repaint();
 
-
+    // ตรวจสอบการชนระหว่างยีราฟและป้อมปราการ
     giraffeIterator = giraffes.iterator();
     while (giraffeIterator.hasNext()) {
         Character giraffe = giraffeIterator.next();
@@ -302,7 +301,7 @@ private void checkCollisions() {
         }
     }
     
-
+    // ตรวจสอบการชนระหว่างศัตรูและป้อมปราการ
     enemyIterator = enemies.iterator();
     while (enemyIterator.hasNext()) {
         Character enemy = enemyIterator.next();
@@ -313,6 +312,7 @@ private void checkCollisions() {
         }
     }
 }
+
 private void setButtonEnabled(boolean enabled) {
     bc1.setEnabled(enabled);
     bc2.setEnabled(enabled);
@@ -325,9 +325,9 @@ class clickbutton implements ActionListener {
     
        private int cooldownbc1 = 1000;
        private   int cooldownbc2 = 1200;
-       private   int cooldownbc3 = 2000;
-       private   int cooldownbc4 = 2500;
-      private    int cooldownbc5 = 3000;
+       private   int cooldownbc3 = 1300;
+       private   int cooldownbc4 = 1500;
+      private    int cooldownbc5 = 2000;
        private int cooldown ;
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -337,23 +337,23 @@ class clickbutton implements ActionListener {
           if (e.getSource() == bc1) {
          setButtonEnabled(false);
          cooldown = cooldownbc1;
-         giraffe = new DefaultGiraffe(1300, y, -5,100,10,500);
+         giraffe = new DefaultGiraffe(1300, y, -5,100,20,300);
      } else if (e.getSource() == bc2) {
          cooldown = cooldownbc2;
              setButtonEnabled(false);
-         giraffe = new TankGiraffe(1300, y, -3,300,12,800); 
+         giraffe = new TankGiraffe(1300, y, -3,300,25,500); 
      } else if (e.getSource() == bc3) {
          cooldown = cooldownbc3;
              setButtonEnabled(false);
-         giraffe = new TitanGiraffe(1300, y, -2,400,30,1000);
+         giraffe = new TitanGiraffe(1300, y, -2,400,35,1000);
      } else if (e.getSource() == bc4) {
          cooldown = cooldownbc4;
                    setButtonEnabled(false);
-         giraffe = new BirdGiraffe(1300, y, -8,100,15,400); 
+         giraffe = new BirdGiraffe(1300, y, -8,2500,30,400); 
      } else if (e.getSource() == bc5) {
          cooldown = cooldownbc5;
            setButtonEnabled(false);
-         giraffe = new LizardGiraffe(1300, y, -6,200,18,600);
+         giraffe = new LizardGiraffe(1300, y, -6,300,40,200);
      }
         
         if (giraffe != null) {
@@ -385,7 +385,7 @@ public void spawnRandomEnemy() {
             enemy = new robottank(startX, startY, 13,300,20,800);
             break;
         case 3:
-            enemy = new lizardrobo(startX, startY, 15,1000,100,1200);
+            enemy = new lizardrobo(startX, startY, 15,3000,100,500);
             break;
         case 2:
             enemy = new spaceship(startX, startY, 18,80,10,400);
