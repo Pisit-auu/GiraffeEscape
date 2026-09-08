@@ -1,0 +1,17 @@
+# Build output
+build/
+dist/
+*.class
+*.jar
+
+# NetBeans
+nbproject/private/
+.netbeans_automatic_build
+.netbeans_update_resources
+*.rs
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*~
+*.swp

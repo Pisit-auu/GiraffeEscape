@@ -1,3 +1,0 @@
-fortress
-fortressGiraffe
-fortressenemy
