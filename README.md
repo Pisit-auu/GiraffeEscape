@@ -144,6 +144,7 @@ java -cp "build\classes;src" MainPage
 ```
 GiraffeEscape/
 ├── build.xml                    # Ant build script (NetBeans)
+├── tools/art/                   # โค้ดวาดภาพในเกม (Art.java = ตัวละคร, Scenes.java = ฉาก)
 ├── nbproject/                   # การตั้งค่าโปรเจกต์ NetBeans (main.class = MainPage)
 └── src/
     ├── MainPage.java            # หน้าเริ่มต้น + main()
@@ -171,6 +172,17 @@ GiraffeEscape/
         └── default/, tank/, titan/, birdgirafe/, lizard/,
             people/, robottank/, spaceship/, titanrobo/, lizardrobo/
                                  # sprite เดิน (walk) และโจมตี (attack) ของแต่ละตัวละคร
+```
+
+### ภาพในเกม
+
+ภาพทั้งหมด (ตัวละคร ไอคอน ป้อม พื้นหลัง หน้าเริ่ม และแผนที่) วาดด้วยโค้ด Java2D ใน `tools/art/` ภาพมีขนาดเท่ากับที่เกมแสดงจริง จึงไม่ถูกยืดจนแตก ถ้าต้องการปรับภาพ ให้แก้โค้ดแล้วสร้างใหม่:
+
+```bash
+cd tools/art
+javac -d build Art.java Scenes.java
+java -cp build Art ../../src      # ตัวละคร + ไอคอน
+java -cp build Scenes ../../src   # ป้อม พื้นหลัง หน้าเริ่ม แผนที่ (ต้องมีฟอนต์ Noto Sans Thai)
 ```
 
 ---
