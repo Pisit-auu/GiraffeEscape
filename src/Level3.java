@@ -33,7 +33,7 @@ public class Level3 extends JFrame implements Runnable{
     private JButton bc5 = createButton("/projectgame/icon/lizardicon.png");
     private JButton exit = new JButton("Exit");
     private JButton exit2 = new JButton("Back to Map");
-    private JButton restart = new JButton("Try Agian");
+    private JButton restart = new JButton("Try Again");
     private JPanel winlose ;
     private JLabel textwinlose;
     private JButton backtomenu;
@@ -51,20 +51,20 @@ public class Level3 extends JFrame implements Runnable{
     private MapPage mapPage;
     private boolean win =false;
     private boolean lose=false;
-    private boolean isRunning = true;
+    private volatile boolean isRunning = true;
     private  Thread enemySpawnThread;
 
 private void restartGame() {
 
     for (GameCharacter giraffe : giraffes) {
-        giraffe.stopattack();
+        giraffe.destroy();
         layeredpane.remove(giraffe.getCharacterLabel());
         
     }
     giraffes.clear();  
 
     for (GameCharacter enemy : enemies) {
-        enemy.stopattack();
+        enemy.destroy();
         layeredpane.remove(enemy.getCharacterLabel());
     }
     enemies.clear(); 
@@ -156,8 +156,16 @@ private void restartGame() {
         
         
         add(layeredpane);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                mapPage.setVisible(true);
+                dispose();
+            }
+        });
          enemySpawnThread = new Thread(() -> {
-            while (true) {
+            while (isRunning) {
                 int randomspawn = 7000 + random.nextInt(500);
 
                 if(checkspawncharacter){
@@ -167,7 +175,7 @@ private void restartGame() {
                 try {
                     Thread.sleep(randomspawn);  
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    break; // ถูกปลุกจาก stopGame() ตอนออกจากด่าน
                 }
             }
         });
@@ -218,6 +226,22 @@ void popwinlose() {
 }
 
 
+
+// หยุด game loop, thread สร้างศัตรู และ thread ของยูนิตทุกตัว
+// ไม่งั้นทุกครั้งที่ออกจากด่าน thread จะค้างทำงานอยู่เบื้องหลังสะสมไปเรื่อย ๆ
+private void stopGame() {
+    isRunning = false;
+    checkspawncharacter = false;
+    if (enemySpawnThread != null) enemySpawnThread.interrupt();
+    for (GameCharacter giraffe : giraffes) giraffe.destroy();
+    for (GameCharacter enemy : enemies) enemy.destroy();
+}
+
+@Override
+public void dispose() {
+    stopGame();
+    super.dispose();
+}
 
 @Override
 public void run() {
@@ -382,7 +406,7 @@ class ButtonListener implements ActionListener {
     }
 }
 public void spawnRandomEnemy() {
-    int enemyType = 3; 
+    int enemyType = random.nextInt(5); 
     int startX = 150;                  
     int startY = 530+random.nextInt(30);  
       GameCharacter enemy = null;

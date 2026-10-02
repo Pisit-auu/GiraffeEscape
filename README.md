@@ -32,9 +32,9 @@
    - ยูนิตที่ชนกันจะโจมตีกันจน HP ฝั่งใดฝั่งหนึ่งหมด ยูนิตที่ไปถึงป้อมฝ่ายตรงข้ามจะหยุดและโจมตีป้อม
    - HP ของป้อมทั้งสองฝั่งแสดงอยู่ด้านบนของจอ (เริ่มที่ 1,000)
 4. **ชนะ** เมื่อ HP ป้อมศัตรูเหลือ 0 และจะปลดล็อกด่านถัดไปบนหน้าแผนที่
-5. **แพ้** เมื่อ HP ป้อมยีราฟเหลือ 0 กด **Try Agian** เพื่อเริ่มด่านใหม่ หรือ **Back to Map** เพื่อกลับไปหน้าแผนที่
+5. **แพ้** เมื่อ HP ป้อมยีราฟเหลือ 0 กด **Try Again** เพื่อเริ่มด่านใหม่ หรือ **Back to Map** เพื่อกลับไปหน้าแผนที่
 
-ระหว่างเล่นมีปุ่ม **restart** (เริ่มด่านใหม่) และ **Exit** (กลับหน้าแผนที่) อยู่มุมขวาล่าง
+ระหว่างเล่นมีปุ่ม **restart** (เริ่มด่านใหม่) และ **Exit** (กลับหน้าแผนที่) อยู่มุมขวาล่าง การกดปุ่ม X ปิดหน้าต่างด่านก็จะกลับไปหน้าแผนที่เช่นกัน
 
 ---
 
@@ -43,8 +43,8 @@
 | ด่าน | ยีราฟที่ใช้ได้ | ศัตรูที่เกิด | ความถี่การเกิดศัตรู | ปลดล็อก |
 |------|----------------|--------------|---------------------|---------|
 | **map1** | Default, Tank | สุ่ม Human / Robot Tank / Spaceship | ทุก 2–3 วินาที | เปิดตั้งแต่แรก |
-| **map2** | Default, Tank, Titan | Titan Robot | ทุก 7.5–8.5 วินาที | ชนะ map1 |
-| **map3** | Default, Tank, Titan, Bird, Lizard | Spaceship | ทุก 7–7.5 วินาที | ชนะ map2 |
+| **map2** | Default, Tank, Titan | สุ่ม 5 ชนิด: Human / Robot Tank / Lizard Robot / Spaceship / Titan Robot | ทุก 7.5–8.5 วินาที | ชนะ map1 |
+| **map3** | Default, Tank, Titan, Bird, Lizard | สุ่ม 5 ชนิด (ค่าพลังสูงกว่า map2) | ทุก 7–7.5 วินาที | ชนะ map2 |
 
 แต่ละด่านมีพื้นหลังของตัวเอง (`bgmap1.png`, `bgmap2.png`, `bgmap3.png`)
 
@@ -76,11 +76,11 @@
 
 | ศัตรู | Class | ค่าที่ใช้จริง (HP / ดาเมจ / ตีทุก ms) | ความเร็ว |
 |-------|-------|----------------------------------------|----------|
-| Human | `Human` | map1: 200 / 20 / 500 | 15 |
-| Robot Tank | `RobotTank` | map1: 500 / 18 / 800 | 13 |
-| Spaceship | `SpaceShip` | map1: 100 / 20 / 400 · map3: 80 / 10 / 400 | 20 (map1), 18 (map3) |
-| Titan Robot | `TitanRobot` | map2: 700 / 100 / 1000 | 12 |
-| Lizard Robot | `LizardRobot` | มีค่ากำหนดไว้ใน map2/map3 แต่ตอนนี้ยังไม่ถูกสุ่มออกมา | 15–16 |
+| Human | `Human` | map1: 200 / 20 / 500 · map2/map3: 100 / 15 / 500 | 15 |
+| Robot Tank | `RobotTank` | map1: 500 / 18 / 800 · map2/map3: 300 / 20 / 800 | 13 |
+| Spaceship | `SpaceShip` | map1: 100 / 20 / 400 · map2/map3: 80 / 10 / 400 | 20 (map1), 18 (map2/map3) |
+| Titan Robot | `TitanRobot` | map2: 700 / 100 / 1000 · map3: 1000 / 100 / 1200 | 12 |
+| Lizard Robot | `LizardRobot` | map2: 120 / 18 / 600 · map3: 3000 / 100 / 500 | 16 (map2), 15 (map3) |
 
 ป้อมทั้งสองฝั่ง (`FortressGiraffe`, `FortressEnemy`) มี HP เริ่มต้น 1,000
 
@@ -200,6 +200,8 @@ MainPage ──Start──► MapPage ──เลือกด่าน──►
 
 การแก้ UI จาก thread อื่นทำผ่าน `SwingUtilities.invokeLater()`
 
+เมื่อออกจากด่าน (Exit, Back to Map หรือปิดหน้าต่าง) `dispose()` จะเรียก `stopGame()` เพื่อหยุด game loop, thread สร้างศัตรู และเรียก `GameCharacter.destroy()` หยุด thread ของยูนิตทุกตัว ตอนกด restart ก็ใช้ `destroy()` เคลียร์ยูนิตเดิมเช่นกัน
+
 ### การเคลื่อนที่
 `GameCharacter` เก็บตำแหน่ง x เป็น `double` (`exactX`) แล้วปัดเป็น `int` ตอนวาด เพราะ `velocity × 0.1` น้อยกว่า 1 พิกเซลต่อ tick ถ้าเก็บเป็น `int` ค่าจะถูกตัดทิ้งทุก tick และทุกตัวจะเดินเร็วเท่ากัน
 
@@ -220,7 +222,7 @@ MainPage ──Start──► MapPage ──เลือกด่าน──►
 | ค่าพลังยีราฟ | `ButtonListener.actionPerformed()` ใน `LevelN.java` เช่น `new TankGiraffe(1300, y, -3, 300, 20, 800)` = (x, y, ความเร็ว, HP, ดาเมจ, ความเร็วโจมตี) |
 | Cooldown ปุ่ม | ตัวแปร `cooldownbc1`–`cooldownbc5` ใน `ButtonListener` (มิลลิวินาที) |
 | ค่าพลังศัตรู | `spawnRandomEnemy()` ใน `LevelN.java` |
-| ชนิดศัตรูที่เกิด | ตัวแปร `enemyType` ใน `spawnRandomEnemy()` (map1 สุ่ม `random.nextInt(3)`, map2/map3 กำหนดค่าตายตัว) |
+| ชนิดศัตรูที่เกิด | ตัวแปร `enemyType` ใน `spawnRandomEnemy()` (map1 สุ่ม `random.nextInt(3)`, map2/map3 สุ่ม `random.nextInt(5)`) |
 | ความถี่การเกิดศัตรู | `randomspawn` ใน `enemySpawnThread` |
 | HP ป้อม | อาร์กิวเมนต์ตัวที่ 3 ของ `new FortressGiraffe(...)` / `new FortressEnemy(...)` และ `sethprestart...()` ใน `Fortress.java` |
 | ความเร็วโดยรวม | `speedFactor` ใน `GameCharacter.java` (ค่าเริ่มต้น 0.1) |
@@ -230,8 +232,6 @@ MainPage ──Start──► MapPage ──เลือกด่าน──►
 ## ข้อจำกัดที่ทราบ
 
 - **ไม่มีการบันทึกความคืบหน้า** ด่านที่ปลดล็อกจะหายเมื่อปิดเกม
-- **map2 และ map3 เกิดศัตรูชนิดเดียว** เพราะ `enemyType` ถูกกำหนดค่าตายตัว ถ้าต้องการให้สุ่มหลายชนิด ให้เปลี่ยนเป็น `random.nextInt(5)`
 - **ไม่มีเสียงและเพลงประกอบ**
-- **Thread ไม่ถูกหยุดเมื่อออกจากด่าน** game loop และ thread ที่สร้างศัตรูยังทำงานต่อหลังกด Exit ถ้าเข้า-ออกด่านหลายรอบ อาจกิน CPU และหน่วยความจำมากขึ้นเรื่อย ๆ
 - **ขนาดหน้าต่างคงที่** ไม่รองรับการปรับขนาดหรือความละเอียดจออื่น
 - **โค้ดซ้ำกันระหว่างด่าน** `Level1`–`Level3` มีโครงสร้างเกือบเหมือนกัน ถ้าจะเพิ่มด่าน ควรแยกเป็นคลาสแม่ `Level` แล้วส่งค่าคอนฟิกของแต่ละด่านเข้าไป

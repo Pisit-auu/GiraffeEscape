@@ -133,6 +133,15 @@ public void attackfortress(Fortress target) {
         attackking =false;
         running=false;
     }
+    // หยุดยูนิตถาวร: ใช้ตอนออกจากด่านหรือเริ่มด่านใหม่
+    // ต้องตั้ง isAlive=false ก่อน ไม่งั้น attack thread จะเรียก anmationwalk() เริ่ม thread เดินใหม่ตอนจบลูป
+    public void destroy(){
+        isAlive = false;
+        attackking = false;
+        running = false;
+        if (attackThread != null) attackThread.interrupt();
+        if (animationThread != null) animationThread.interrupt();
+    }
 public void attack(GameCharacter other) {
    stopMoving(); 
      if (attackking) return; 
