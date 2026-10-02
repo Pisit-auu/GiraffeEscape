@@ -240,28 +240,38 @@ public class Scenes {
     g.setTransform(t);
   }
 
-  static BufferedImage startPage() {
-    BufferedImage im = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_RGB);
+  /** หน้าเริ่มเกม: เวอร์ชัน Java วาด 1000x800 (ปุ่ม Start ที่ 400,400), เวอร์ชันเว็บวาด 1600x800 (ปุ่มที่ 700,560) */
+  static BufferedImage startPage(int w) {
+    BufferedImage im = new BufferedImage(w, 800, BufferedImage.TYPE_INT_RGB);
     Graphics2D g = canvas(im);
-    g.setPaint(new RadialGradientPaint(500, 380, 650, new float[] {0f, 1f}, new Color[] {new Color(0xFFF6B8), new Color(0xF2E37E)}));
-    g.fillRect(0, 0, 1000, 800);
+    double cx = w / 2.0;
+    g.setPaint(new RadialGradientPaint((float) cx, 380, w * 0.65f, new float[] {0f, 1f}, new Color[] {new Color(0xFFF6B8), new Color(0xF2E37E)}));
+    g.fillRect(0, 0, w, 800);
     // ลายจุดยีราฟจาง ๆ เป็นพื้นหลัง
     Random r = new Random(7);
     g.setColor(new Color(0xE8C860));
-    for (int i = 0; i < 26; i++) {
-      double x = r.nextDouble() * 1000, y = r.nextDouble() * 800, w = 40 + r.nextDouble() * 60;
-      g.fill(new Ellipse2D.Double(x, y, w, w * (0.6 + r.nextDouble() * 0.3)));
+    for (int i = 0; i < 26 * w / 1000; i++) {
+      double x = r.nextDouble() * w, y = r.nextDouble() * 800, s = 40 + r.nextDouble() * 60;
+      g.fill(new Ellipse2D.Double(x, y, s, s * (0.6 + r.nextDouble() * 0.3)));
     }
     // ชื่อเกม
-    Font f = new Font("DejaVu Sans", Font.BOLD, 88);
-    drawTitle(g, "GIRAFFE", 500, 170, f);
-    drawTitle(g, "ESCAPE", 500, 285, f);
+    Font f = new Font("DejaVu Sans", Font.BOLD, w > 1000 ? 104 : 88);
+    drawTitle(g, "GIRAFFE", cx, w > 1000 ? 200 : 170, f);
+    drawTitle(g, "ESCAPE", cx, w > 1000 ? 330 : 285, f);
     // ตัวละคร
-    sprite(g, Art.titanGiraffe(0, 0, false, 0), 30, 70, 270, -0.08);
-    sprite(g, Art.birdGiraffe(0.5, 0, 0, 0.05, 0, false), 720, 110, 250, 0);
-    sprite(g, Art.tankGiraffe(0, 6, 4, 0, 0), 120, 450, 280, -0.12);
-    sprite(g, Art.lizardGiraffe(0, 4, 4, 0, 0, false), 500, 470, 260, 0);
-    sprite(g, Art.defaultGiraffe(1, 0, 0, 0, 0), 740, 420, 250, 0.06);
+    if (w > 1000) {
+      sprite(g, Art.titanGiraffe(0, 0, false, 0), 40, 60, 300, -0.08);
+      sprite(g, Art.birdGiraffe(0.5, 0, 0, 0.05, 0, false), 1250, 60, 280, 0);
+      sprite(g, Art.tankGiraffe(0, 6, 4, 0, 0), 140, 430, 330, -0.1);
+      sprite(g, Art.lizardGiraffe(0, 4, 4, 0, 0, false), 950, 450, 300, 0);
+      sprite(g, Art.defaultGiraffe(1, 0, 0, 0, 0), 1260, 400, 300, 0.06);
+    } else {
+      sprite(g, Art.titanGiraffe(0, 0, false, 0), 30, 70, 270, -0.08);
+      sprite(g, Art.birdGiraffe(0.5, 0, 0, 0.05, 0, false), 720, 110, 250, 0);
+      sprite(g, Art.tankGiraffe(0, 6, 4, 0, 0), 120, 450, 280, -0.12);
+      sprite(g, Art.lizardGiraffe(0, 4, 4, 0, 0, false), 500, 470, 260, 0);
+      sprite(g, Art.defaultGiraffe(1, 0, 0, 0, 0), 740, 420, 250, 0.06);
+    }
     g.dispose();
     return im;
   }
@@ -364,7 +374,9 @@ public class Scenes {
     ImageIO.write(bg1(), "png", new File(out, "bgmap1.png"));
     ImageIO.write(bg2(), "png", new File(out, "bgmap2.png"));
     ImageIO.write(bg3(), "png", new File(out, "bgmap3.png"));
-    ImageIO.write(startPage(), "png", new File(out, "startpage.png"));
+    // ส่ง argument ที่สอง "web" เพื่อสร้างหน้าเริ่มขนาด 1600x800 สำหรับเวอร์ชันเว็บ (GiraftEscapeWeb)
+    boolean web = a.length > 1 && a[1].equals("web");
+    ImageIO.write(startPage(web ? 1600 : 1000), "png", new File(out, "startpage.png"));
     ImageIO.write(mapPage(), "png", new File(out, "projectgame/map/map1.png"));
   }
 }

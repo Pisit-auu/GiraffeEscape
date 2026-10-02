@@ -185,6 +185,8 @@ java -cp build Art ../../src      # ตัวละคร + ไอคอน
 java -cp build Scenes ../../src   # ป้อม พื้นหลัง หน้าเริ่ม แผนที่ (ต้องมีฟอนต์ Noto Sans Thai)
 ```
 
+เวอร์ชันเว็บ ([GiraftEscapeWeb](https://github.com/Pisit-auu/GiraftEscapeWeb)) ใช้รูปชุดเดียวกัน ส่ง argument `web` ให้ `Scenes` เพื่อสร้างหน้าเริ่มขนาด 1600x800 สำหรับเว็บ
+
 ---
 
 ## สถาปัตยกรรมของเกม
